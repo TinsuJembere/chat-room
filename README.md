@@ -2,7 +2,7 @@
 
 A modern, real-time chat application built with React, Node.js, and Socket.IO. This application allows users to join chat rooms and exchange messages in real-time with a clean, responsive interface.
 
-![Chat Application Preview](https://via.placeholder.com/800x400.png?text=Chat+Application+Preview)
+you can watch live on https://chat-room-lime.vercel.app/
 
 ## ✨ Features
 
