@@ -39,7 +39,7 @@ A modern, real-time chat application built with React, Node.js, and Socket.IO. T
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/chat-app.git
+   git clone https://github.com/TinsuJembere/chat-app.git
    cd chat-app
    ```
 
@@ -61,6 +61,7 @@ A modern, real-time chat application built with React, Node.js, and Socket.IO. T
    ```env
    PORT=5000
    CLIENT_URL=http://localhost:5173
+   MONGODB_URI=your mongodb uri
    ```
 
 ## 🚦 Running the Application
@@ -128,4 +129,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-Made with ❤️ by [Your Name]
+Made with ❤️ by Tinsae
