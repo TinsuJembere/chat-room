@@ -17,7 +17,7 @@ const io = socketIo(server, {
   cors: {
     origin:
       process.env.NODE_ENV === "production"
-        ? "https://chat-room-lime.vercel.app/"
+        ? "https://chat-room-lime.vercel.app"
         : ["http://localhost:3000", "http://localhost:5173"],
     methods: ["GET", "POST"],
     credentials: true,
@@ -29,7 +29,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? "https://your-production-url.com"
+        ? "https://chat-room-lime.vercel.app"
         : ["http://localhost:3000", "http://localhost:5173"],
     credentials: true,
   })
@@ -42,12 +42,12 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  .then(() => console.log("✅ Connected to MongoDB"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // Socket.IO connection handling
 io.on("connection", (socket) => {
-  console.log("New client connected");
+  console.log("🔌 New client connected");
 
   // Join a chat room
   socket.on("join_room", async (roomId, username) => {
@@ -86,8 +86,8 @@ io.on("connection", (socket) => {
   });
 
   // Handle disconnection
-  socket.on("disconnect", async () => {
-    console.log("Client disconnected");
+  socket.on("disconnect", () => {
+    console.log("❌ Client disconnected");
   });
 });
 
@@ -98,7 +98,7 @@ app.use("/api/chat", chatRoutes);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../../client/dist")));
 
-  // Fix for Express 5 / path-to-regexp
+  // ✅ Catch-all route for SPA (works with Express 5)
   app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "../../client/dist/index.html"));
   });
@@ -106,15 +106,29 @@ if (process.env.NODE_ENV === "production") {
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res
-    .status(500)
-    .json({ message: "Something went wrong!", error: err.message });
+  console.error("🔥 Server error:", err.stack);
+  res.status(500).json({ message: "Something went wrong!", error: err.message });
 });
+
+// Debug helper: list all registered routes
+if (process.env.NODE_ENV !== "production") {
+  console.log("📌 Registered routes:");
+  app._router.stack.forEach((r) => {
+    if (r.route && r.route.path) {
+      console.log(`${Object.keys(r.route.methods).join(",").toUpperCase()} ${r.route.path}`);
+    } else if (r.name === "router") {
+      r.handle.stack.forEach((s) => {
+        if (s.route && s.route.path) {
+          console.log(`${Object.keys(s.route.methods).join(",").toUpperCase()} ${s.route.path}`);
+        }
+      });
+    }
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
 
 module.exports = { app, server };
