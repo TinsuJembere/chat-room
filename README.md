@@ -62,6 +62,7 @@ A modern, real-time chat application built with React, Node.js, and Socket.IO. T
    PORT=5000
    CLIENT_URL=http://localhost:5173
    MONGODB_URI=your mongodb uri
+   JWT_SECRET=your jwt secret key
    ```
 
 ## 🚦 Running the Application
