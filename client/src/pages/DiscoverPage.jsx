@@ -44,7 +44,7 @@ const DiscoverPage = () => {
     const fetchRooms = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:5000/api/rooms');
+        const response = await axios.get('https://chat-room-goiw.onrender.com/api/rooms');
         setRooms(response.data);
         setError(null);
       } catch (err) {

@@ -88,10 +88,13 @@ app.use('/api/chat', chatRoutes);
 // Serve static files from the React app in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../../client/dist')));
-  app.get('*', (req, res) => {
+
+  // Fix for Express 5 / path-to-regexp
+  app.get('/:path(*)', (req, res) => {
     res.sendFile(path.join(__dirname, '../../client/dist/index.html'));
   });
 }
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
